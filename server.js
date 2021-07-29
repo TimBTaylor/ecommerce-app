@@ -1,7 +1,6 @@
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") require("dotenv").config();
 const express = require("express");
 const db = require("./config/db");
-const dotenv = require("dotenv");
 const cors = require("cors");
 dotenv.config({ path: "./config/.env" });
 db();
