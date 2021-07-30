@@ -1,12 +1,20 @@
-if (process.env.NODE_ENV !== "production") require("dotenv").config();
+require("dotenv").config();
+
 const express = require("express");
-const db = require("./config/db");
-const cors = require("cors");
-db();
-
 const app = express();
+const mongoose = require("mongoose");
+const cors = require("cors");
+const authRouter = require("./routes/auth");
 
-app.use(express.json());
+mongoose.connect(process.env.DATABASE_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+
+db.on("error", (error) => console.error(error));
+db.on("open", () => console.log("Connected to database"));
 
 app.use(
   cors({
@@ -15,15 +23,13 @@ app.use(
   })
 );
 
-const authRouter = require("./routes/auth.routes");
+app.use(express.json());
+
 app.use("/auth", authRouter);
 
-app.get("/", (req, res) => {
-  res.send("Hello");
+app.get("/hello", (req, res) => {
+  res.send("HELLO");
 });
 
-const PORT = process.env.PORT || 8080;
-
-app.listen(PORT, () => {
-  console.log(`Server is running on ${PORT}`);
-});
+var port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server listening on ${port}`));
