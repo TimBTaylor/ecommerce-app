@@ -5,6 +5,10 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const authRouter = require("./routes/auth");
+const productRouter = require("./routes/product");
+const orderRouter = require("./routes/order");
+const cardRouter = require("./routes/card");
+const addressRouter = require("./routes/address");
 
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
@@ -26,6 +30,14 @@ app.use(
 app.use(express.json());
 
 app.use("/auth", authRouter);
+
+app.use("/product", productRouter);
+
+app.use("/order", orderRouter);
+
+app.use("/card", cardRouter);
+
+app.use("/address", addressRouter);
 
 app.get("/hello", (req, res) => {
   res.send("HELLO");

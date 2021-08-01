@@ -16,6 +16,15 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    address: {
+      type: Array,
+    },
+    orders: {
+      type: Array,
+    },
+    cardInfo: {
+      type: Array,
+    },
   },
   {
     collection: "users",
