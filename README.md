@@ -37,21 +37,17 @@ npm start
 if :id is the the URL is will
 
 ### Register a user
-`post request`
-```
-http://localhost:3000/auth/register
-```
-#### Body
+`POST /auth/register`
+* Body
 `name, email, password`
 
 ### Login
-`post request`
-```
-http://localhost:3000/auth/login
-```
+`POST /auth/login`
+* Body 
+`email, password`
 
-### Add user address
-`post`
-```
-http://localhost:3000/address/:id/new-address
-```
+### Update User
+`POST /:id/update-user`
+`where :id is the users id`
+* Body
+`name, email, password`
