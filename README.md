@@ -41,6 +41,8 @@ if :id is the the URL is will
 ```
 http://localhost:3000/auth/register
 ```
+#### Body
+`name, email, password`
 
 ### Login
 `post request`
