@@ -11,6 +11,7 @@ const cardRouter = require("./routes/card");
 const addressRouter = require("./routes/address");
 const cartRouter = require("./routes/cart");
 const savedRouter = require("./routes/savedForLater");
+const userInfoRouter = require("./routes/usersInfo");
 
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
@@ -44,6 +45,8 @@ app.use("/address", addressRouter);
 app.use("/cart", cartRouter);
 
 app.use("/saved", savedRouter);
+
+app.use("/info", userInfoRouter);
 
 app.get("/hello", (req, res) => {
   res.send("HELLO");

@@ -1,5 +1,4 @@
 const express = require("express");
-const { isValidObjectId } = require("mongoose");
 const router = express.Router();
 const Product = require("../models/products");
 const User = require("../models/users");
