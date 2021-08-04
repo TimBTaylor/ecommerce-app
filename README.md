@@ -34,7 +34,22 @@ npm start
 ```
 
 ## Routes
+if :id is the the URL is will
 
 ### Register a user
 `post request`
-  
+```
+http://localhost:3000/auth/register
+```
+
+### Login
+`post request`
+```
+http://localhost:3000/auth/login
+```
+
+### Add user address
+`post`
+```
+http://localhost:3000/address/:id/new-address
+```
