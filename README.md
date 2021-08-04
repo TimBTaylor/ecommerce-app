@@ -40,98 +40,149 @@ npm start
 `POST /auth/register`
 * Body
 `name, email, password`
+* Example
+```
+```
 
 ### Login
 `POST /auth/login`
 * Body 
 `email, password`
+* Example
+```
+```
 
 ### Update User
 `POST /info/:id/update-user`  
 
 * Body
 `name, email, password`
+* Example
+```
+```
 
 ### Delete User
 `POST /info/:id/delete-user`
+* Example
+```
+```
 
 ### Adding users address
 `POST /address/:id/new-address`
 
 * Body
 `name, streetAddress, city, state, zipcode`
+* Example
+```
+```
 
 ### Deleting address
 `DELETE /address/:id/delete-address`
 
 * Body
 `addressId`
+* Example
+```
+```
 
 ### Updated address
 `PUT /address/:id/update-address`
 
 * Body
 `name, streetAddress, city, state, zipcode`
+* Example
+```
+```
 
 ### Add card information
 `POST /card/:id/add-card`
 
 * Body
 `name, cardNumber, ccv, expiration`
+* Example
+```
+```
 
 ### Delete card information
 `DELETE /card/:id/delete-card`
 
 * Body 
 `cardId`
+* Example
+```
+```
 
 ### Updated card information
 `PUT /card/:id/updated-card`
 
 * Body
 `name, cardNumber, ccv, expiraton`
+* Example
+```
+```
 
 ### Add items to users cart
 `PUT /cart/:id/add-to-cart`
 
 * Body
 `_id (product id), name (product name), price (product price), category (product category), image (product image)`
+* Example
+```
+```
 
 ### Removing items for usrs cart
 `DElETE /cart/:id/delete-from-cart`
 
 * Body
 `productId`
+* Example
+```
+```
 
 ### Add items to saved for later
 `PUT /saved/:id/add-to-saved`
 
 * Body
 `_id (product id), name (product name), price (product price), category (product category), image (product image)`
+* Example
+```
+```
 
 ### Remove item from saved for later
 `DELETE /saved/:id/delete-from-saved`
 
 * Body
 `productId`
+* Example
+```
+```
 
 ### Add an order to users orders
 `POST /order/:id/new-order`
 
 * Body
 `products (product name, product price, product title, product image), order total $, quantity of items, orderNumber)`
+* Example
+```
+```
 
 ### Delete an order
 `DELETE /order/:id/delete-order`
 
 * Body 
 `orderId`
+* Example
+```
+```
 
 ### Update an order
 `PUT /order/:id/updated-order`
 
 * Body
 `orderId, productId (the one you want to remove)`
+* Example
+```
+```
 
 ### Get all products 
 `GET /product/all-products`
@@ -139,12 +190,18 @@ npm start
 ### Get product by id
 `GET /product/:id`
 THE :id IN THE URL WILL BE THE PRODUCT ID
+* Example
+```
+```
 
 ### Add a new product
 `POST /product/new-product`
 
 * Body
 `title (product title), price (product price), description (product description), category (product category), image (product image), quantity (product quantity)`
+* Example
+```
+```
 
 ### Add review to a product
 `POST /product/review/:id`
@@ -152,3 +209,6 @@ THE :id IN THE URL WILL BE THE PRODUCT ID
 
 * Body
 `name, rating (1-5), description, buyAgain (Yes or No)`
+* Example
+```
+```
