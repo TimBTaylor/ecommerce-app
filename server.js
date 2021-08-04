@@ -9,6 +9,8 @@ const productRouter = require("./routes/product");
 const orderRouter = require("./routes/order");
 const cardRouter = require("./routes/card");
 const addressRouter = require("./routes/address");
+const cartRouter = require("./routes/cart");
+const savedRouter = require("./routes/savedForLater");
 
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
@@ -23,7 +25,7 @@ db.on("open", () => console.log("Connected to database"));
 app.use(
   cors({
     origin: "*",
-    methods: ["GET, POST, DELETE, PATCH"],
+    methods: ["GET, POST, DELETE, PUT"],
   })
 );
 
@@ -38,6 +40,10 @@ app.use("/order", orderRouter);
 app.use("/card", cardRouter);
 
 app.use("/address", addressRouter);
+
+app.use("/cart", cartRouter);
+
+app.use("/saved", savedRouter);
 
 app.get("/hello", (req, res) => {
   res.send("HELLO");

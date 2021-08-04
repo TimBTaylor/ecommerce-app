@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/products");
+const productReviewShema = require("../models/productReview");
 
 // get all products
-router.get("/allproducts", async (req, res) => {
+router.get("/all-products", async (req, res) => {
   try {
     const products = await Product.find();
     return res.json(products);
@@ -20,7 +21,6 @@ router.post("/new-product", async (req, res) => {
     description: req.body.description,
     category: req.body.category,
     image: req.body.image,
-    reviews: req.body.reviews,
     quantity: req.body.quantity,
   });
 
@@ -33,7 +33,7 @@ router.post("/new-product", async (req, res) => {
 });
 
 // get product by id
-router.get("/product-by-id/:id", getProduct, async (req, res) => {
+router.get("/:id", getProduct, async (req, res) => {
   try {
     res.send(res.product);
   } catch (error) {
@@ -44,11 +44,16 @@ router.get("/product-by-id/:id", getProduct, async (req, res) => {
 });
 
 // add review to product
-router.post("/:id/review", getProduct, async (req, res) => {
+router.post("/review/:id", getProduct, async (req, res) => {
   try {
-    if (req.body !== null) {
-      res.product.reviews.push(req.body);
-    }
+    const newReview = new productReviewShema({
+      name: req.body.name,
+      rating: req.body.rating,
+      description: req.body.description,
+      buyAgain: req.body.buyAgain,
+    });
+
+    res.product.reviews.push(newReview);
 
     const updatedReviews = await res.product.save();
     return res.status(200).json(updatedReviews);

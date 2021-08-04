@@ -9,6 +9,7 @@ const authorize = require("../middleware/auth");
 
 router.post("/login", (req, res) => {
   let getUser;
+  // finds user via email
   User.findOne({
     email: req.body.email,
   })

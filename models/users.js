@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema(
     cardInfo: {
       type: Array,
     },
+    savedForLater: {
+      type: Array,
+    },
+    cart: {
+      type: Array,
+    },
   },
   {
     collection: "users",

@@ -3,9 +3,11 @@ const router = express.Router();
 const User = require("../models/users");
 const orderSchema = require("../models/order");
 const cardSchema = require("../models/card");
+const { update } = require("../models/users");
+const order = require("../models/order");
 
 // add order request
-router.post("/:id/neworder", getUser, async (req, res) => {
+router.post("/:id/new-order", getUser, async (req, res) => {
   try {
     if (req.body != null) {
       const newOrder = new orderSchema({
@@ -24,8 +26,8 @@ router.post("/:id/neworder", getUser, async (req, res) => {
 });
 
 //delete order request
-router.delete("/:id/deleteorder/:orderId", getUser, async (req, res) => {
-  const deleteOrder = req.params.id;
+router.delete("/:id/delete-order", getUser, async (req, res) => {
+  const deleteOrder = req.body.orderId;
   const currentOrderList = res.user.orders;
   const newOrderList = currentOrderList.filter((order) => {
     return order._id != deleteOrder;
@@ -36,7 +38,43 @@ router.delete("/:id/deleteorder/:orderId", getUser, async (req, res) => {
     const updatedUser = await res.user.save();
     res.json(updatedUser);
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// update an order
+router.put("/:id/update-order", getUser, async (req, res) => {
+  const updatedOrderById = req.body.orderId;
+  const removedProduct = req.body.productId;
+  const currentOrderList = res.user.orders;
+  // getting the order that is being updated
+  const updatedOrder = currentOrderList.filter((order) => {
+    return order._id == updatedOrderById;
+  });
+
+  // removing the updated order
+  const orderListWithoutUpdatedOrder = currentOrderList.filter((order) => {
+    return order._id != updatedOrderById;
+  });
+
+  // removing the product from the udpated order
+  const updatedProductList = updatedOrder[0].products.filter((product) => {
+    return product.id != removedProduct;
+  });
+
+  // setting the updated product list
+  updatedOrder[0].products = updatedProductList;
+  // sets users orders to updated order
+  res.user.orders = updatedOrder;
+  // loops through rest of orders adding them to the array
+  for (let i = 0; i < orderListWithoutUpdatedOrder.length; i++) {
+    res.user.orders.push(orderListWithoutUpdatedOrder[i]);
+  }
+  try {
+    const updatedUser = await res.user.save();
+    res.json(updatedUser);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 

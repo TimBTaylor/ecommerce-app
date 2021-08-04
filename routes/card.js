@@ -4,44 +4,46 @@ const User = require("../models/users");
 const cardSchema = require("../models/card");
 
 //add card request
-router.post("/:id/addcard", getUser, async (req, res) => {
+router.post("/:id/add-card", getUser, async (req, res) => {
   try {
-    if (req.body != null) {
-      const newCard = new cardSchema({
-        name: req.body.name,
-        cardNumber: req.body.cardNumber,
-        ccv: req.body.ccv,
-        expiration: req.body.expiration,
-      });
-      res.user.cardInfo.push(newCard);
-    }
-    const updatedCardInfo = await res.user.save();
-    return res.status(200).json(updatedCardInfo);
+    //creates new card schema
+    const newCard = new cardSchema({
+      name: req.body.name,
+      cardNumber: req.body.cardNumber,
+      ccv: req.body.ccv,
+      expiration: req.body.expiration,
+    });
+    // add new card to card info list
+    res.user.cardInfo.push(newCard);
+    await res.user.save();
+    return res.status(200).json(res.user.cardInfo);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
 });
 
 //delete card request
-router.delete("/:id/deletecard/:cardId", getUser, async (req, res) => {
-  const cardId = req.params.cardId;
+router.delete("/:id/delete-card", getUser, async (req, res) => {
+  const cardId = req.body.cardId;
   const usersCards = res.user.cardInfo;
+  // filters out requested deleted card
   const updatedCard = usersCards.filter((card) => {
     return card._id != cardId;
   });
   res.user.cardInfo = updatedCard;
   try {
-    const updatedUser = await res.user.save();
-    res.json(updatedUser);
+    await res.user.save();
+    return res.status(200).json(res.user.cardInfo);
   } catch (error) {
     res.status(400).json(error);
   }
 });
 
-//edit card request
-router.post("/:id/updatecard/:cardId", getUser, async (req, res) => {
-  const cardId = req.params.cardId;
+// update card request
+router.put("/:id/update-card", getUser, async (req, res) => {
+  const cardId = req.body.cardId;
   const usersCards = res.user.cardInfo;
+  // filters out requested updated card
   const newCardList = usersCards.filter((card) => {
     return card._id != cardId;
   });
@@ -52,10 +54,10 @@ router.post("/:id/updatecard/:cardId", getUser, async (req, res) => {
     expiration: req.body.expiration,
   });
   res.user.cardInfo = newCardList;
-  res.user.cardInfo.push(updatedCard);
+  res.user.cardInfo.unshift(updatedCard);
   try {
-    const updatedUser = await res.user.save();
-    res.json(updatedUser);
+    await res.user.save();
+    return res.status(200).json(res.user.cardInfo);
   } catch (error) {
     res.status(400).json(error);
   }
