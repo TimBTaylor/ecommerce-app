@@ -34,7 +34,7 @@ npm start
 ```
 
 ## Routes
-(if :id is included in the URL is is referring to the users._id)
+#### if :id is in the URL is it referring to the user._id
 
 ### Register a user
 `POST /auth/register`
