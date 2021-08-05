@@ -15,7 +15,7 @@ router.put("/:id/add-to-saved", getUser, getProduct, async (req, res) => {
   res.user.savedForLater.unshift(newItem);
   try {
     await res.user.save();
-    return res.json(res.user.savedForLater);
+    return res.status(201).json(res.user.savedForLater);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
@@ -33,7 +33,7 @@ router.delete("/:id/delete-from-saved", getUser, async (req, res) => {
 
   try {
     await res.user.save();
-    return res.json(res.user.savedForLater);
+    return res.status(200).json(res.user.savedForLater);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }

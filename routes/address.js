@@ -17,8 +17,10 @@ router.post("/:id/new-address", getUser, async (req, res) => {
   res.user.address.push(newAddress);
   try {
     await res.user.save();
-    return res.status(200).json(res.user.address);
-  } catch (error) {}
+    return res.status(201).json(res.user.address);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 });
 
 //delete address request
@@ -36,7 +38,7 @@ router.delete("/:id/delete-address", getUser, async (req, res) => {
     await res.user.save();
     return res.status(200).json(res.user.address);
   } catch (error) {
-    res.status(400).json(error);
+    return res.status(400).json(error);
   }
 });
 
@@ -63,9 +65,9 @@ router.put("/:id/update-address", getUser, async (req, res) => {
 
   try {
     await res.user.save();
-    return res.status(200).json(res.user.address);
+    return res.status(201).json(res.user.address);
   } catch (error) {
-    res.status(400).json(error);
+    return res.status(400).json(error);
   }
 });
 

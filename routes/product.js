@@ -8,7 +8,7 @@ const getProduct = require("../middleware/getProduct");
 router.get("/all-products", async (req, res) => {
   try {
     const products = await Product.find();
-    return res.json(products);
+    return res.status(200).json(products);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
@@ -27,18 +27,18 @@ router.post("/new-product", async (req, res) => {
 
   try {
     const newProduct = await product.save();
-    res.status(201).json(newProduct);
+    return res.status(201).json(newProduct);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    return res.status(400).json({ message: error.message });
   }
 });
 
 // get product by id
 router.get("/get-product", getProduct, async (req, res) => {
   try {
-    res.send(res.product);
+    return res.status(200).json(res.product);
   } catch (error) {
-    res.status(401).json({
+    return res.status(401).json({
       message: error.message,
     });
   }
@@ -56,8 +56,8 @@ router.post("/product-review", getProduct, async (req, res) => {
 
     res.product.reviews.push(newReview);
 
-    const updatedReviews = await res.product.save();
-    return res.status(200).json(updatedReviews);
+    await res.product.save();
+    return res.status(201).json(res.product);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

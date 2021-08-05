@@ -16,7 +16,7 @@ router.put("/:id/add-to-cart", getUser, getProduct, async (req, res) => {
   res.user.cart.unshift(newItem);
   try {
     await res.user.save();
-    return res.json(res.user.cart);
+    return res.status(201).json(res.user.cart);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
@@ -33,7 +33,7 @@ router.delete("/:id/delete-from-cart", getUser, async (req, res) => {
 
   try {
     await res.user.save();
-    return res.json(res.user.cart);
+    return res.status(200).json(res.user.cart);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }

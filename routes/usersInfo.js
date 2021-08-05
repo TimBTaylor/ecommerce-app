@@ -24,9 +24,9 @@ router.post("/:id/update-user", authorize, getUser, async (req, res) => {
 router.delete("/:id/delete-user", authorize, getUser, async (req, res) => {
   User.findByIdAndRemove(req.params.id, (error, deletedRecord) => {
     if (!error) {
-      res.json(deletedRecord);
+      return res.staus(200).json(deletedRecord);
     } else {
-      res.json(error);
+      return res.status(400).json(error);
     }
   });
 });

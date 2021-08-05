@@ -17,7 +17,7 @@ router.post("/:id/new-order", getUser, async (req, res) => {
       res.user.orders.push(newOrder);
     }
     const updatedUserOrders = await res.user.save();
-    return res.status(200).json(updatedUserOrders);
+    return res.status(201).json(updatedUserOrders);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
@@ -33,10 +33,10 @@ router.delete("/:id/delete-order", getUser, async (req, res) => {
 
   res.user.orders = newOrderList;
   try {
-    const updatedUser = await res.user.save();
-    res.json(updatedUser);
+    await res.user.save();
+    return res.status(200).json(res.user.orders);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    return res.status(400).json({ message: error.message });
   }
 });
 
@@ -69,8 +69,8 @@ router.put("/:id/update-order", getUser, async (req, res) => {
     res.user.orders.push(orderListWithoutUpdatedOrder[i]);
   }
   try {
-    const updatedUser = await res.user.save();
-    res.json(updatedUser);
+    await res.user.save();
+    return res.status(201).json(res.user.orders);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

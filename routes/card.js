@@ -16,7 +16,7 @@ router.post("/:id/add-card", getUser, async (req, res) => {
     // add new card to card info list
     res.user.cardInfo.push(newCard);
     await res.user.save();
-    return res.status(200).json(res.user.cardInfo);
+    return res.status(201).json(res.user.cardInfo);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
@@ -35,7 +35,7 @@ router.delete("/:id/delete-card", getUser, async (req, res) => {
     await res.user.save();
     return res.status(200).json(res.user.cardInfo);
   } catch (error) {
-    res.status(400).json(error);
+    return res.status(400).json(error);
   }
 });
 
@@ -57,9 +57,9 @@ router.put("/:id/update-card", getUser, async (req, res) => {
   res.user.cardInfo.unshift(updatedCard);
   try {
     await res.user.save();
-    return res.status(200).json(res.user.cardInfo);
+    return res.status(201).json(res.user.cardInfo);
   } catch (error) {
-    res.status(400).json(error);
+    return res.status(400).json(error);
   }
 });
 
