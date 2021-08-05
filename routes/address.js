@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const addressSchema = require("../models/address");
-const User = require("../models/users");
+const getUser = require("../middleware/getUser");
 
 //add address request
 router.post("/:id/new-address", getUser, async (req, res) => {
@@ -68,22 +68,5 @@ router.put("/:id/update-address", getUser, async (req, res) => {
     res.status(400).json(error);
   }
 });
-
-//get user middleware
-async function getUser(req, res, next) {
-  let user;
-  try {
-    user = await User.findById(req.params.id);
-
-    if (user == null) {
-      return res.status(404).json({ message: "Cannot find user" });
-    }
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-
-  res.user = user;
-  next();
-}
 
 module.exports = router;

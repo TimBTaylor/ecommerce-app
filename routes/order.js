@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/users");
 const orderSchema = require("../models/order");
-const cardSchema = require("../models/card");
-const { update } = require("../models/users");
-const order = require("../models/order");
+const getUser = require("../middleware/getUser");
+const Product = require("../models/products");
 
 // add order request
 router.post("/:id/new-order", getUser, async (req, res) => {
@@ -77,22 +75,5 @@ router.put("/:id/update-order", getUser, async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
-
-//get user middleware
-async function getUser(req, res, next) {
-  let user;
-  try {
-    user = await User.findById(req.params.id);
-
-    if (user == null) {
-      return res.status(404).json({ message: "Cannot find user" });
-    }
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-
-  res.user = user;
-  next();
-}
 
 module.exports = router;

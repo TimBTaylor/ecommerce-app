@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("../models/products");
-const User = require("../models/users");
+const getUser = require("../middleware/getUser");
+const getProduct = require("../middleware/getProduct");
 
 // add item to savedForLater
 router.put("/:id/add-to-saved", getUser, getProduct, async (req, res) => {
@@ -39,37 +39,4 @@ router.delete("/:id/delete-from-saved", getUser, async (req, res) => {
   }
 });
 
-//get user middleware
-async function getUser(req, res, next) {
-  let user;
-  try {
-    user = await User.findById(req.params.id);
-
-    if (user == null) {
-      return res.status(404).json({ message: "Cannot find user" });
-    }
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-
-  res.user = user;
-  next();
-}
-
-//get product middleware
-async function getProduct(req, res, next) {
-  let product;
-  try {
-    product = await Product.findById(req.body.productId);
-
-    if (product == null) {
-      return res.status(404).json({ message: "Cannot find product" });
-    }
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-
-  res.product = product;
-  next();
-}
 module.exports = router;

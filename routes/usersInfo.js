@@ -3,6 +3,7 @@ const router = express.Router();
 const authorize = require("../middleware/auth");
 const User = require("../models/users");
 const bcrypt = require("bcrypt");
+const getUser = require("../middleware/getUser");
 
 //updated user
 router.post("/:id/update-user", authorize, getUser, async (req, res) => {
@@ -29,22 +30,5 @@ router.delete("/:id/delete-user", authorize, getUser, async (req, res) => {
     }
   });
 });
-
-//get user middleware
-async function getUser(req, res, next) {
-  let user;
-  try {
-    user = await User.findById(req.params.id);
-
-    if (user == null) {
-      return res.status(404).json({ message: "Cannot find user" });
-    }
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-
-  res.user = user;
-  next();
-}
 
 module.exports = router;

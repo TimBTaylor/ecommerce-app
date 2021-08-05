@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../models/products");
 const productReviewShema = require("../models/productReview");
+const getProduct = require("../middleware/getProduct");
 
 // get all products
 router.get("/all-products", async (req, res) => {
@@ -33,7 +34,7 @@ router.post("/new-product", async (req, res) => {
 });
 
 // get product by id
-router.get("/:id", getProduct, async (req, res) => {
+router.get("/get-product", getProduct, async (req, res) => {
   try {
     res.send(res.product);
   } catch (error) {
@@ -44,7 +45,7 @@ router.get("/:id", getProduct, async (req, res) => {
 });
 
 // add review to product
-router.post("/review/:id", getProduct, async (req, res) => {
+router.post("/product-review", getProduct, async (req, res) => {
   try {
     const newReview = new productReviewShema({
       name: req.body.name,
@@ -61,22 +62,5 @@ router.post("/review/:id", getProduct, async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 });
-
-//get product middleware
-async function getProduct(req, res, next) {
-  let product;
-  try {
-    product = await Product.findById(req.params.id);
-
-    if (product == null) {
-      return res.status(404).json({ message: "Cannot find product" });
-    }
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-
-  res.product = product;
-  next();
-}
 
 module.exports = router;
