@@ -39,4 +39,15 @@ router.delete("/:id/delete-from-cart", getUser, async (req, res) => {
   }
 });
 
+//remove all items from cart
+router.delete("/:id/remove-all-from-cart", getUser, async (req, res) => {
+  try {
+    res.user.cart = [];
+    await res.user.save();
+    return res.status(200).json(res.user);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+});
+
 module.exports = router;
