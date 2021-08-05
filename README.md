@@ -34,7 +34,7 @@ npm start
 ```
 
 ## Routes
-### If the URL requires a :id it will always be the users ID unless its a request to the products
+#### if :id is in the URL is it referring to the user._id
 
 ### Register a user
 `POST /auth/register`
@@ -130,7 +130,7 @@ npm start
 ```
 ```
 
-### Removing items for usrs cart
+### Removing items for users cart
 `DElETE /cart/:id/delete-from-cart`
 
 * Body
@@ -188,8 +188,10 @@ npm start
 `GET /product/all-products`
 
 ### Get product by id
-`GET /product/:id`
-THE :id IN THE URL WILL BE THE PRODUCT ID
+`GET /get-product`
+
+* Body
+`productId`
 * Example
 ```
 ```
@@ -204,11 +206,10 @@ THE :id IN THE URL WILL BE THE PRODUCT ID
 ```
 
 ### Add review to a product
-`POST /product/review/:id`
-THE :id IN THE URL WILL BE THE PRODUCT ID
+`POST /product-review`
 
 * Body
-`name, rating (1-5), description, buyAgain (Yes or No)`
+`productId, name, rating (1-5), description, buyAgain (Yes or No)`
 * Example
 ```
 ```
