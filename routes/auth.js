@@ -55,26 +55,35 @@ router.post("/login", (req, res) => {
 
 // register request
 
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
+  const users = await User.find();
   bcrypt.hash(req.body.password, 10).then((hash) => {
     const user = new User({
       name: req.body.name,
       email: req.body.email,
       password: hash,
     });
-    user
-      .save()
-      .then((response) => {
-        res.status(201).json({
-          message: "user created",
-          user: response,
+    const emailUsed = users.filter((user) => {
+      return user.email === req.body.email;
+    });
+
+    if (emailUsed.length > 0) {
+      res.send("Email already in use");
+    } else {
+      user
+        .save()
+        .then((response) => {
+          res.status(201).json({
+            message: "user created",
+            user: response,
+          });
+        })
+        .catch((error) => {
+          res.status(500).json({
+            message: error.message,
+          });
         });
-      })
-      .catch((error) => {
-        res.status(500).json({
-          message: error.message,
-        });
-      });
+    }
   });
 });
 
