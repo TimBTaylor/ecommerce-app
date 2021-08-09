@@ -7,10 +7,10 @@ const authorize = require("../middleware/auth");
 
 //login request
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   let getUser;
   // finds user via email
-  User.findOne({
+  await User.findOne({
     email: req.body.email,
   })
     .then((user) => {
