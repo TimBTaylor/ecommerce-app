@@ -13,14 +13,14 @@ router.post("/login", async (req, res) => {
       email: req.body.email,
     });
     if (!user) {
-      return res.status(418).json({ message: "Login failed at email" });
+      return res.json({ message: "Login failed at email" });
     } else {
       const passwordValid = await bcrypt.compare(
         req.body.password,
         user.password
       );
       if (!passwordValid) {
-        return res.status(418).json({ message: "Login failed at password" });
+        return res.json({ message: "Login failed at password" });
       } else {
         let jwToken = jwt.sign(
           {
