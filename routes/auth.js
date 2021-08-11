@@ -8,49 +8,40 @@ const authorize = require("../middleware/auth");
 //login request
 
 router.post("/login", async (req, res) => {
-  let getUser;
-  // finds user via email
-  await User.findOne({
-    email: req.body.email,
-  })
-    .then((user) => {
-      if (!user) {
-        return res.status(401).json({
-          message: "Login Failed at email",
-        });
-      }
-      getUser = user;
-      return bcrypt.compare(req.body.password, user.password);
-    })
-    .then((response) => {
-      if (!response) {
-        return res.status(401).json({
-          message: "Login Failed at password",
-        });
-      }
-    })
-    .then(() => {
-      let jwToken = jwt.sign(
-        {
-          email: getUser.email,
-          userId: getUser.id,
-        },
-        "longer-secret-is-better",
-        {
-          expiresIn: "2h",
-        }
-      );
-      res.status(200).json({
-        token: jwToken,
-        expiresIn: 600,
-        user: getUser,
-      });
-    })
-    .catch((err) => {
-      return res.status(401).json({
-        message: err.message,
-      });
+  try {
+    const user = await User.findOne({
+      email: req.body.email,
     });
+    if (!user) {
+      return res.status(401).json({ message: "Login failed at email" });
+    } else {
+      const passwordValid = await bcrypt.compare(
+        req.body.password,
+        user.password
+      );
+      if (!passwordValid) {
+        return res.status(401).json({ message: "Login failed at password" });
+      } else {
+        let jwToken = jwt.sign(
+          {
+            email: user.email,
+            userId: user.id,
+          },
+          "longer-secret-is-better",
+          {
+            expiresIn: "2h",
+          }
+        );
+        return res.status(200).json({
+          token: jwToken,
+          expiresIn: 600,
+          user,
+        });
+      }
+    }
+  } catch (error) {
+    return res.status(401).json(error);
+  }
 });
 
 // register request
