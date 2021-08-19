@@ -21,7 +21,7 @@ router.delete("/:id/delete-from-cart", getUser, async (req, res) => {
   const productId = req.body.productId;
   const usersCart = res.user.cart;
   const cart = usersCart.filter((product) => {
-    return product._id != productId;
+    return product !== productId;
   });
   res.user.cart = cart;
 
