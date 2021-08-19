@@ -8,10 +8,6 @@ const getProduct = require("../middleware/getProduct");
 router.put("/:id/add-to-cart", getUser, getProduct, async (req, res) => {
   const newItem = {
     _id: res.product._id,
-    name: res.product.title,
-    price: res.product.price,
-    category: res.product.category,
-    image: res.product.image,
   };
   res.user.cart.unshift(newItem);
   try {
