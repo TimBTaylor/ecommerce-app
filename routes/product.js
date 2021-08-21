@@ -21,6 +21,8 @@ router.post("/new-product", async (req, res) => {
     price: req.body.price,
     description: req.body.description,
     category: req.body.category,
+    type: req.body.type,
+    gender: req.body.gender,
     image: req.body.image,
     quantity: req.body.quantity,
   });
