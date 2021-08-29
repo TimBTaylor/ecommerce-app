@@ -5,13 +5,7 @@ const getProduct = require("../middleware/getProduct");
 
 // add item to savedForLater
 router.put("/:id/add-to-saved", getUser, getProduct, async (req, res) => {
-  const newItem = {
-    _id: res.product._id,
-    name: res.product.title,
-    price: res.product.price,
-    category: res.product.category,
-    image: res.product.image,
-  };
+  const newItem = req.body.productId;
   res.user.savedForLater.unshift(newItem);
   try {
     await res.user.save();
