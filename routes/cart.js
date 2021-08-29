@@ -6,7 +6,10 @@ const getProduct = require("../middleware/getProduct");
 
 // add item to cart
 router.put("/:id/add-to-cart", getUser, getProduct, async (req, res) => {
-  const newItem = req.body.productId;
+  const newItem = {
+    productId: req.body.productId,
+    quantity: req.body.quantity,
+  };
   res.user.cart.unshift(newItem);
   try {
     await res.user.save();

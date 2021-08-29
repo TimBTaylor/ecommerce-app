@@ -5,7 +5,10 @@ const getProduct = require("../middleware/getProduct");
 
 // add item to savedForLater
 router.put("/:id/add-to-saved", getUser, getProduct, async (req, res) => {
-  const newItem = req.body.productId;
+  const newItem = {
+    productId: req.body.productId,
+    quantity: req.body.quantity,
+  };
   res.user.savedForLater.unshift(newItem);
   try {
     await res.user.save();
@@ -28,6 +31,17 @@ router.delete("/:id/delete-from-saved", getUser, async (req, res) => {
   try {
     await res.user.save();
     return res.status(200).json(res.user.savedForLater);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+});
+
+//remove all items for savedForLater
+router.delete("/:id/remove-all-from-later", getUser, async (req, res) => {
+  try {
+    res.user.savedForLater = [];
+    await res.user.save();
+    return res.status(200).json(res.user);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
