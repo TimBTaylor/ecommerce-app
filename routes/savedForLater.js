@@ -8,6 +8,7 @@ router.put("/:id/add-to-saved", getUser, getProduct, async (req, res) => {
   const newItem = {
     productId: req.body.productId,
     quantity: req.body.quantity,
+    size: req.body.size,
   };
   res.user.savedForLater.unshift(newItem);
   try {

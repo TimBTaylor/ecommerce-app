@@ -9,6 +9,7 @@ router.put("/:id/add-to-cart", getUser, getProduct, async (req, res) => {
   const newItem = {
     productId: req.body.productId,
     quantity: req.body.quantity,
+    size: req.body.size,
   };
   res.user.cart.unshift(newItem);
   try {
