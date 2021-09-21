@@ -24,7 +24,7 @@ router.delete("/:id/delete-from-saved", getUser, async (req, res) => {
   const productId = req.body.productId;
   const usersSavedForLater = res.user.savedForLater;
   const savedForLater = usersSavedForLater.filter((product) => {
-    return product._id != productId;
+    return product.productId !== productId;
   });
 
   res.user.savedForLater = savedForLater;
