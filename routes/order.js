@@ -14,6 +14,7 @@ router.post("/:id/new-order", getUser, async (req, res) => {
         quantity: req.body.quantity,
         orderNumber: req.body.orderNumber,
         shippingType: req.body.shippingType,
+        date: req.body.date,
       });
       res.user.orders.push(newOrder);
     }
