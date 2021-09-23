@@ -17,6 +17,10 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  shippingType: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("orderSchema", orderSchema);
