@@ -9,8 +9,8 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  ccv: {
-    type: Number,
+  type: {
+    type: String,
     required: true,
   },
   expiration: {

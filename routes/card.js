@@ -10,7 +10,7 @@ router.post("/:id/add-card", getUser, async (req, res) => {
     const newCard = new cardSchema({
       name: req.body.name,
       cardNumber: req.body.cardNumber,
-      ccv: req.body.ccv,
+      type: req.body.type,
       expiration: req.body.expiration,
     });
     // add new card to card info list
@@ -50,7 +50,7 @@ router.put("/:id/update-card", getUser, async (req, res) => {
   const updatedCard = new cardSchema({
     name: req.body.name,
     cardNumber: req.body.cardNumber,
-    ccv: req.body.ccv,
+    type: req.body.type,
     expiration: req.body.expiration,
   });
   res.user.cardInfo = newCardList;
