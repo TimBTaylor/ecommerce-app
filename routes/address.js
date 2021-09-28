@@ -56,7 +56,7 @@ router.put("/:id/update-address", getUser, async (req, res) => {
   const newUpdatedAddress = new addressSchema({
     name: req.body.name,
     streetAddress: req.body.streetAddress,
-    city: req.body,
+    city: req.body.city,
     state: req.body.state,
     zipcode: req.body.zipcode,
   });
