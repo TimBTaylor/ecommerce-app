@@ -9,8 +9,8 @@ const getUser = require("../middleware/getUser");
 router.post("/:id/update-user", authorize, getUser, async (req, res) => {
   try {
     bcrypt.hash(req.body.password, 10).then((hashed) => {
-      res.user.fName = req.body.fName;
-      res.user.lName = req.body.lName;
+      res.user.firstName = req.body.firstName;
+      res.user.lastName = req.body.lastName;
       res.user.email = req.body.email;
       res.user.password = hashed;
     });
