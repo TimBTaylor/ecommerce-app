@@ -22,16 +22,7 @@ router.post("/login", async (req, res) => {
       if (!passwordValid) {
         return res.json({ message: "Login failed at password" });
       } else {
-        let jwToken = jwt.sign(
-          {
-            email: user.email,
-            userId: user.id,
-          },
-          "longer-secret-is-better",
-          {
-            expiresIn: "2h",
-          }
-        );
+        let jwToken = jwt.sign("longer-secret-is-better");
         return res.status(200).json({
           token: jwToken,
           expiresIn: 600,
