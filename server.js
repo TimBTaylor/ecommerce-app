@@ -16,6 +16,7 @@ const userInfoRouter = require("./routes/usersInfo");
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 });
 
 const db = mongoose.connection;
