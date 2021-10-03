@@ -22,10 +22,10 @@ router.post("/:id/update-user", authorize, getUser, async (req, res) => {
 });
 
 // delete user
-router.delete("/:id/delete-user", authorize, getUser, async (req, res) => {
+router.delete("/:id/delete-user", getUser, async (req, res) => {
   User.findByIdAndRemove(req.params.id, (error, deletedRecord) => {
     if (!error) {
-      return res.staus(200).json(deletedRecord);
+      return res.status(200).json(deletedRecord);
     } else {
       return res.status(400).json(error);
     }
