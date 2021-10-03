@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const getUser = require("../middleware/getUser");
 
 //updated user
-router.post("/:id/update-user", authorize, getUser, async (req, res) => {
+router.post("/:id/update-user", getUser, async (req, res) => {
   try {
     bcrypt.hash(req.body.password, 10).then((hashed) => {
       res.user.firstName = req.body.firstName;
