@@ -30,7 +30,7 @@ yarn install
 
 * once it is finished installing the dependencies run the follow command
 ```
-npm start
+npm run devStart
 ```
 
 ## Routes
@@ -42,6 +42,17 @@ npm start
 `name, email, password`
 * Example
 ```
+await axios({
+      method: "post",
+      url: "https://ecommersappbytim.herokuapp.com/auth/register",
+      header: { "Content-Type": "application/json" },
+      data: {
+        firstName,
+        lastName,
+        email,
+        password,
+      },
+    })
 ```
 
 ### Login
