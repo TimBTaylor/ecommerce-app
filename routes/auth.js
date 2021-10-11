@@ -80,7 +80,7 @@ router.post("/register", async (req, res) => {
 });
 
 // all users request
-router.get("/allusers", authorize, async (req, res) => {
+router.get("/allusers", async (req, res) => {
   try {
     const users = await User.find();
     res.json(users);
