@@ -19,6 +19,7 @@ router.post("/new-product", async (req, res) => {
   const product = new Product({
     title: req.body.title,
     price: req.body.price,
+    salePrice: req.body.salePrice,
     description: req.body.description,
     category: req.body.category,
     type: req.body.type,
